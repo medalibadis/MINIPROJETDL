@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECG AI - Neural Anomaly Detection</title>
+    <link rel="stylesheet" href="static/style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <svg class="heart-rate" viewBox="0 0 50 50">
+                    <path d="M5 25 L15 25 L20 10 L30 40 L35 25 L45 25" />
+                </svg>
+                ECG<span>.AI</span>
+            </div>
+            <div class="header-info">
+                <span style="color: var(--text-dim); font-size: 0.9rem;">CNN-Autoencoder v1.0</span>
+            </div>
+        </header>
+
+        <section class="hero">
+            <h1>Neural ECG Analysis</h1>
+            <p>Intelligence artificielle avancée pour la détection en temps réel des anomalies cardiaques via Auto-encodeurs Convolutifs.</p>
+        </section>
+
+        <div class="dashboard-grid">
+            <!-- Sidebar: Controls -->
+            <div class="sidebar">
+                <div class="card" style="margin-bottom: 1.5rem;">
+                    <div class="card-title"><i data-lucide="database"></i> Données de Test</div>
+                    <div class="control-group">
+                        <span class="control-label">Sélectionner un échantillon :</span>
+                        <div class="btn-group">
+                            <button class="btn" onclick="loadSample('normal')">
+                                <i data-lucide="check-circle" style="color: var(--success)"></i> Normal
+                            </button>
+                            <button class="btn" onclick="loadSample('anomaly')">
+                                <i data-lucide="alert-triangle" style="color: var(--danger)"></i> Anomalie
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title"><i data-lucide="upload-cloud"></i> Importer Signal</div>
+                    <div class="upload-area" id="drop-zone">
+                        <div class="upload-icon">📁</div>
+                        <p style="font-weight: 600;">Glissez un fichier ici</p>
+                        <p style="font-size: 0.8rem; color: var(--text-dim);">CSV (187 points) ou Image (PNG/JPG)</p>
+                        <input type="file" id="file-input" hidden accept=".csv, .png, .jpg, .jpeg">
+                        <button class="btn primary" style="margin-top: 1rem; width: 100%;" onclick="document.getElementById('file-input').click()">Parcourir</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content: Analysis -->
+            <div class="main-content">
+                <div class="card" style="height: 100%; min-height: 500px; position: relative;">
+                    <div class="loading-overlay" id="loading">
+                        <div class="spinner"></div>
+                        <p style="margin-top: 1rem; color: var(--primary);">Analyse neuronale en cours...</p>
+                    </div>
+
+                    <div class="result-header">
+                        <div class="card-title" style="margin-bottom: 0;"><i data-lucide="activity"></i> Visualisation du Signal</div>
+                        <div id="status-container"></div>
+                    </div>
+
+                    <div class="metrics">
+                        <div class="metric-box">
+                            <div class="metric-label">Erreur de Reconstruction (MAE)</div>
+                            <div class="metric-value" id="mae-value">0.0000</div>
+                        </div>
+                        <div class="metric-box">
+                            <div class="metric-label">Seuil de Détection</div>
+                            <div class="metric-value" id="threshold-value">0.0000</div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="ecg-canvas"></canvas>
+                    </div>
+                    
+                    <div id="image-result" style="margin-top: 2rem; display: none;">
+                        <p class="control-label">Rapport de Reconstruction :</p>
+                        <img id="viz-image" style="width: 100%; border-radius: 8px; border: 1px solid var(--border);">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer style="margin-top: 4rem; text-align: center; color: var(--text-dim); font-size: 0.8rem; padding-bottom: 2rem;">
+            &copy; 2026 ECG.AI - Projet Deep Learning - ESI SBA
+        </footer>
+    </div>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="static/app.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
